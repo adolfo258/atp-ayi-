@@ -33,6 +33,7 @@ passport.use(new JwtStrategy({
 
 }, (jwt_payload, done) => {
     UserSchema.findOne({id: jwt_payload.sub}, (err, user) => {
+        
         if(err){ return done (err, false) }
 
           if(user){ return done(null,user) }

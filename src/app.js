@@ -12,8 +12,12 @@ const app = express()
 require('./config/mongodb')
 
 //SETTINGS
+const cors = require('cors')
+
 
 app.set('port', process.env.PORT)
+app.use(express.json())
+app.use(cors())
 
 //SERVER
 
@@ -26,9 +30,6 @@ app.listen(app.get('port'), () => {
 const passport = require('passport')
 require('./config/passport')
 
-//MIDLEWARES
-
-app.use(express.json())
 
 //ROUTER IMPORT
 
@@ -37,13 +38,12 @@ const restaurantRouter = require('./routes/restaurants')
 const mealRouter = require('./routes/meals')
 
 
-
 app.use('/user', userRouter)
 app.use('/restaurant', restaurantRouter)
 app.use('/meal', passport.authenticate('jwt', {session:false}), mealRouter)
 
 
-//404 Not Found
+//404 NOT FOUND
 app.use((req, res) => {
     res.status(404).send('Sorry cant find that!');
   });

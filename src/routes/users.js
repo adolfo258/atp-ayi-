@@ -13,7 +13,7 @@ router.get('/', showUser)
 router.get('/:id', showUser)
 
 //POST
-router.post('/register' ,validateUser , createUser)
+router.post('/register', createUser)
 router.post('/login', passport.authenticate('local', {session: false}), (req, res) => {
     //LE ENTREGO EL TOKEN AL USER AUTENTICADO
     const user = req.user

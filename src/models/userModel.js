@@ -12,7 +12,7 @@ const UserSchema = new Schema({
         type: String,
         unique: true
     },
-    rol: [String]
+    rol: String
 },{
     timestamps: true
 })

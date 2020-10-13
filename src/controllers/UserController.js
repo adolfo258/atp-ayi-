@@ -19,7 +19,7 @@ const bcrypt = require('bcrypt')
         try {
             const hash = await bcrypt.hash(user.password, 10)
             user.password = hash
-            user.save().then(user => res.send('User inserted correctly')).catch(err => res.status(500).send(err))
+            user.save().then(user => res.json({message: 'Usuario creado correctamente'})).catch(err => res.status(500).send(err))
 
         } catch (e) {
             res.status(500).send('Error al crear usuario')
