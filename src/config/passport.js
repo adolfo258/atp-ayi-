@@ -28,7 +28,7 @@ passport.use( new LocalStrategy({
 
 //JWT STRATEGY PARA AUTENTICAR EL TOKEN EN CADA RUTA
 passport.use(new JwtStrategy({
-    jwtFromRequest: ExtractJwt.fromHeader('auth-token'),
+    jwtFromRequest: ExtractJwt.fromHeader('authToken'),
     secretOrKey: process.env.SECRET
 
 }, (jwt_payload, done) => {

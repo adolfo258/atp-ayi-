@@ -18,7 +18,7 @@ router.post('/login', passport.authenticate('local', {session: false}), (req, re
     //LE ENTREGO EL TOKEN AL USER AUTENTICADO
     const user = req.user
 
-    const token = jwt.sign({ id:user._id },process.env.SECRET , {expiresIn:'1h'})
+    const token = jwt.sign({ user }, process.env.SECRET, {expiresIn:'1h'})
 
     return res.json({ login:'Login succesfully', token })
 })
