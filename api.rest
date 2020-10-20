@@ -28,3 +28,12 @@ Content-Type: application/json
 	"rol": ["user"]
 }
 
+###
+
+PUT http://localhost:3000/user/5f8c8fd05c777917003f4426
+Content-Type: application/json
+
+{
+	"name": "adolfo123"
+}
+

@@ -25,10 +25,10 @@ router.post('/login', passport.authenticate('local', {session: false}), (req, re
 
 
 //PUT
-router.put('/:id', editUser)
+router.put('/:id' ,editUser)
 
 //DELETE
-router.delete('/', deleteUser)
+router.delete('/' , deleteUser)
 router.delete('/:id', deleteUser)
 
 

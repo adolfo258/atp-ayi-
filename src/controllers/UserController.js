@@ -30,17 +30,17 @@ const bcrypt = require('bcrypt')
     const editUser = async(req, res) => {
             const user = req.body
     
-            UserSchema.updateOne({_id : req.params.id}, user).then(msg => res.send(`User edited correctly`)).catch(err => res.status(500).send(err))
+            UserSchema.findByIdAndUpdate({_id : req.params.id}, user).then(msg => res.json({message:`User edited correctly`})).catch(err => res.status(500).send(err))
     
     }
     
 //DELETE
     const deleteUser = (req, res) => {
             if(!req.params.id){
-                UserSchema.remove().then(users => res.send('Collection USERS deleted')).catch(err => res.status(500).send(err))
+                UserSchema.remove().then(users => res.json({message:'Collection USERS deleted'})).catch(err => res.status(500).send(err))
     
             }else{
-                UserSchema.remove({_id : req.params.id}).then(user => res.send(`User deleted`)).catch(err => res.status(500).send(err))
+                UserSchema.remove({_id : req.params.id}).then(user => res.json({message:`User deleted`})).catch(err => res.status(500).send(err))
     
             }
         }
