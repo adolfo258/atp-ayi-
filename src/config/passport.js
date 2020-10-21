@@ -28,16 +28,19 @@ passport.use( new LocalStrategy({
 
 //JWT STRATEGY PARA AUTENTICAR EL TOKEN EN CADA RUTA
 passport.use(new JwtStrategy({
-    jwtFromRequest: ExtractJwt.fromHeader('authToken'),
-    secretOrKey: process.env.SECRET
+    secretOrKey: process.env.SECRET,
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 
-}, (jwt_payload, done) => {
-    UserSchema.findOne({id: jwt_payload.sub}, (err, user) => {
-        
-        if(err){ return done (err, false) }
-
-          if(user){ return done(null,user) }
-
-          else{ return done(null,false) }
-    })
+}, (payload, done) => {
+    UserSchema.findOne({_id: payload.user._id}).then(user => {
+        if(user){
+            return done(null, user)
+        } else{
+            return done(null, false)
+        }
+    }).catch(err => done (err, null))
+   
 }))
+
+
+

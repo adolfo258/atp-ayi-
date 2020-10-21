@@ -40,7 +40,7 @@ const mealRouter = require('./routes/meals')
 
 app.use('/user', userRouter)
 app.use('/restaurant', restaurantRouter)
-app.use('/meal', passport.authenticate('jwt', {session:false}), mealRouter)
+app.use('/meal' ,mealRouter)
 
 
 //404 NOT FOUND

@@ -9,7 +9,7 @@ const { validateUser } = require ('../validators/userValidator')
 const { checkRoles } = require('../controllers/authController')
 
 //GET
-router.get('/', showUser)
+router.get('/', passport.authenticate('jwt', {session:false}), showUser)
 router.get('/:id', showUser)
 
 //POST
@@ -18,9 +18,11 @@ router.post('/login', passport.authenticate('local', {session: false}), (req, re
     //LE ENTREGO EL TOKEN AL USER AUTENTICADO
     const user = req.user
 
-    const token = jwt.sign({ user }, process.env.SECRET, {expiresIn:'1h'})
+    const token = jwt.sign( { user } , process.env.SECRET, {expiresIn:'1h'})
 
-    return res.json({ login:'Login succesfully', token })
+    const bearerToken = `Bearer ${token}` 
+
+    return res.json({ login:'Login succesfully', bearerToken })
 })
 
 
