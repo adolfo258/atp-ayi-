@@ -13,11 +13,12 @@ require('./config/mongodb')
 
 //SETTINGS
 const cors = require('cors')
-
+const path = require('path')
 
 app.set('port', process.env.PORT)
 app.use(express.json())
 app.use(cors())
+
 
 //SERVER
 
@@ -42,6 +43,7 @@ app.use('/user', userRouter)
 app.use('/restaurant', restaurantRouter)
 app.use('/meal' ,mealRouter)
 
+app.use('/uploads', express.static(path.resolve('uploads')))
 
 //404 NOT FOUND
 app.use((req, res) => {

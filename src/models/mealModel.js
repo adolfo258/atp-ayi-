@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const MealSchema = new Schema({
     name: String,
     taste: String,
+    origin: String,
     veggie: Boolean,
     restaurants: [{ type: Schema.Types.ObjectId, ref: "restaurants", autopopulate: true }]
 },{ 

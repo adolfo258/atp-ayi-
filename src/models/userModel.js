@@ -12,6 +12,7 @@ const UserSchema = new Schema({
         type: String,
         unique: true
     },
+    avatar: String,
     rol: String
 },{
     timestamps: true

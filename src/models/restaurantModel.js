@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const RestaurantSchema = new Schema({
     name: String,
+    smoke: String,
     lat: String,
     long: String,
     cuit: String,

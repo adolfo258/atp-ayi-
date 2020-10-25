@@ -1,37 +1,31 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-const jwt = require('jsonwebtoken')
+const multer = require('../config/multer')
 
-const { showUser, createUser, editUser, deleteUser } = require('../controllers/userController')
+const { showUser, createUser, editUser, deleteUser, createAvatar } = require('../controllers/userController')
 const { validateUser } = require ('../validators/userValidator')
 
-const { checkRoles } = require('../controllers/authController')
+const { checkRoles, tokenCreate } = require('../controllers/authController')
 
 //GET
 router.get('/', passport.authenticate('jwt', {session:false}), showUser)
-router.get('/:id', showUser)
+router.get('/:id', passport.authenticate('jwt', {session:false}), showUser)
 
 //POST
-router.post('/register', createUser)
-router.post('/login', passport.authenticate('local', {session: false}), (req, res) => {
-    //LE ENTREGO EL TOKEN AL USER AUTENTICADO
-    const user = req.user
+router.post('/register', validateUser, createUser)
+router.post('/login', passport.authenticate('local', {session: false}), tokenCreate)
 
-    const token = jwt.sign( { user } , process.env.SECRET, {expiresIn:'1h'})
+//IMG UPLOAD
 
-    const bearerToken = `Bearer ${token}` 
-
-    return res.json({ login:'Login succesfully', bearerToken })
-})
-
+router.post('/uploads/:id', passport.authenticate('jwt', {session:false}), multer.single('avatar'), createAvatar)
 
 //PUT
-router.put('/:id' ,editUser)
+router.put('/:id' ,passport.authenticate('jwt', {session:false}), checkRoles(['admin']), editUser)
 
 //DELETE
-router.delete('/' , deleteUser)
-router.delete('/:id', deleteUser)
+router.delete('/' , passport.authenticate('jwt', {session:false}), checkRoles(['admin']), deleteUser)
+router.delete('/:id', passport.authenticate('jwt', {session:false}), checkRoles(['admin']), deleteUser)
 
 
 module.exports = router

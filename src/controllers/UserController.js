@@ -1,5 +1,6 @@
 const UserSchema = require('../models/userModel')
 const bcrypt = require('bcrypt')
+const multer = require('../config/multer')
 
 //SHOW
     const showUser = (req, res) => {
@@ -34,6 +35,12 @@ const bcrypt = require('bcrypt')
     
     }
     
+//IMG UPLOAD
+    const createAvatar = (req, res) => {
+         const path = req.file.path
+         UserSchema.findOneAndUpdate({_id: req.params.id}, {avatar: path} ).then(msg => res.json({message: 'Photo updated correctly'})).catch(err => res.status(500).json({err}))
+    }
+    
 //DELETE
     const deleteUser = (req, res) => {
             if(!req.params.id){
@@ -46,4 +53,4 @@ const bcrypt = require('bcrypt')
         }
 
 
-module.exports = {showUser, createUser, editUser, deleteUser }
+module.exports = {showUser, createUser, editUser, deleteUser, createAvatar }
