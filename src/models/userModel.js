@@ -1,7 +1,8 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const UserSchema = new Schema(
+  {
     name: String,
     lastName: String,
     dni: String,
@@ -9,14 +10,21 @@ const UserSchema = new Schema({
     sex: String,
     password: String,
     email: {
-        type: String,
-        unique: true
+      type: String,
+      unique: true,
     },
     avatar: String,
-    rol: String
-},{
-    timestamps: true
-})
+    rol: String,
+  },
+  {
+    timestamps: true,
+  }
+);
 
+UserSchema.index({
+  name: "text",
+  lastName: "text",
+  rol: "text",
+});
 
-module.exports = mongoose.model('users', UserSchema) 
+module.exports = mongoose.model("users", UserSchema);

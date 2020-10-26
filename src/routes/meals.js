@@ -1,24 +1,23 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const {showMeal, createMeal, editMeal, deleteMeal } = require('../controllers/mealController')
-const { validateMeal } = require('../validators/mealValidator')
+const { showMeal, createMeal, editMeal, deleteMeal } = require("../controllers/mealController");
+const { validateMeal } = require("../validators/mealValidator");
 
-const { checkRoles } = require('../controllers/authController')
+const { checkRoles } = require("../controllers/authController");
 
 //GET
-router.get('/', showMeal)
-router.get('/:id', showMeal)
+router.get("/", showMeal);
+router.get("/:id", showMeal);
 
 //POST
-router.post('/',validateMeal, createMeal)
+router.post("/", validateMeal, createMeal);
 
 //PUT
-router.put('/:id', editMeal)
+router.put("/:id", editMeal);
 
 //DELETE
-router.delete('/', deleteMeal)
-router.delete('/:id', deleteMeal)
+router.delete("/", deleteMeal);
+router.delete("/:id", deleteMeal);
 
-
-module.exports = router
+module.exports = router;
