@@ -10,6 +10,7 @@ const {
   deleteUser,
   createAvatar,
   searchUser,
+  showManagerUsers,
 } = require("../controllers/userController");
 
 const { validateUser } = require("../validators/userValidator");
@@ -21,6 +22,7 @@ router.get("/:params", passport.authenticate("jwt", { session: false }), searchU
 
 //GET
 router.get("/", passport.authenticate("jwt", { session: false }), showUser);
+router.get("/managers/all", showManagerUsers);
 
 //POST
 router.post("/register", validateUser, createUser);

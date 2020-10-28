@@ -24,6 +24,12 @@ const showUser = (req, res) => {
   }
 };
 
+const showManagerUsers = async (req, res) => {
+  UserSchema.find({ rol: "restaurant_manager" })
+    .then(users => res.json({ users }))
+    .catch(err => res.status(500).json({ err }));
+};
+
 //CREATE
 const createUser = async (req, res) => {
   const user = new UserSchema(req.body);
@@ -63,6 +69,7 @@ const createAvatar = (req, res) => {
     })
     .catch(err => res.json({ err }));
 };
+
 //DELETE
 const deleteUser = (req, res) => {
   if (!req.params.id) {
@@ -76,4 +83,12 @@ const deleteUser = (req, res) => {
   }
 };
 
-module.exports = { showUser, createUser, editUser, deleteUser, createAvatar, searchUser };
+module.exports = {
+  showUser,
+  createUser,
+  editUser,
+  deleteUser,
+  createAvatar,
+  searchUser,
+  showManagerUsers,
+};

@@ -1,4 +1,13 @@
 const RestaurantSchema = require("../models/restaurantModel");
+const path = require("path");
+const fs = require("fs-extra");
+
+//SEARCH
+const searchRestaurant = (req, res) => {
+  RestaurantSchema.find({ $text: { $search: req.params.params } })
+    .then(rest => res.json({ rest }))
+    .catch(err => res.json({ err }));
+};
 
 //SHOW
 const showRestaurant = (req, res) => {
@@ -19,27 +28,42 @@ const createRestaurant = async (req, res) => {
 
   restaurant
     .save()
-    .then(msg => res.send("Restaurant inserted correctly"))
+    .then(msg => res.json({ message: "Restaurant inserted correctly" }))
     .catch(err => res.status(500).send(err));
 };
 
 //EDIT
 const editRestaurant = (req, res) => {
   RestaurantSchema.update({ _id: req.params.id }, req.body)
-    .then(msg => res.send(`Restaurant edited correctly`))
-    .catch(err => res.status(500).send(err));
+    .then(msg => res.json({ message: `Restaurant edited correctly` }))
+    .catch(err => res.status(500).json({ err }));
+};
+
+//IMG UPLOAD
+const createAvatar = (req, res) => {
+  const pathAvatar = req.file.path;
+
+  RestaurantSchema.findOneAndUpdate({ _id: req.params.id }, { avatar: pathAvatar })
+    .then(restaurant => {
+      //si hay una foto previamente la borro
+      if (restaurant.avatar) {
+        fs.unlink(path.resolve(restaurant.avatar));
+      }
+      return res.json({ message: "Avatar updated correctly" });
+    })
+    .catch(err => res.json({ err }));
 };
 
 //DELETE
 const deleteRestaurant = (req, res) => {
   if (!req.params.id) {
     RestaurantSchema.remove()
-      .then(restaurants => res.send("Collection Restaurants deleted"))
-      .catch(err => res.status(500).send(err));
+      .then(restaurants => res.json({ message: "Collection Restaurants deleted" }))
+      .catch(err => res.status(500).json({ err }));
   } else {
     RestaurantSchema.remove({ _id: req.params.id })
-      .then(msg => res.send(`Restaurant deleted`))
-      .catch(err => res.status(500).send(err));
+      .then(msg => res.json({ message: `Restaurant deleted` }))
+      .catch(err => res.status(500).json({ err }));
   }
 };
 
@@ -48,4 +72,6 @@ module.exports = {
   createRestaurant,
   editRestaurant,
   deleteRestaurant,
+  searchRestaurant,
+  createAvatar,
 };

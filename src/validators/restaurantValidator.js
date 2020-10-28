@@ -3,10 +3,12 @@ const Joi = require("joi");
 const validateRestaurant = (req, res, next) => {
   const schema = Joi.object({
     name: Joi.string().required(),
+    smoke: Joi.string().required(),
     lat: Joi.string().required(),
     long: Joi.string().required(),
     cuit: Joi.string().min(12).max(13).required(),
-    meals: Joi.array(),
+    meals: Joi.array().allow("").optional(),
+    avatar: Joi.string().allow("").optional(),
   });
 
   schema
