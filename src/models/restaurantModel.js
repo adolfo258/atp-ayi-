@@ -1,4 +1,3 @@
-const { string } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -10,7 +9,7 @@ const RestaurantSchema = new Schema(
     long: String,
     cuit: String,
     meals: [{ type: Schema.Types.ObjectId, ref: "meals", autopopulate: true }],
-    managerId: String,
+    managerId: { type: Schema.Types.ObjectId, ref: "users", autopopulate: true },
     avatar: String,
   },
   {

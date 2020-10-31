@@ -13,6 +13,7 @@ const searchRestaurant = (req, res) => {
 const showRestaurant = (req, res) => {
   if (!req.params.id) {
     RestaurantSchema.find()
+      .populate()
       .then(restaurants => res.send(restaurants))
       .catch(err => res.status(404).send(err));
   } else {

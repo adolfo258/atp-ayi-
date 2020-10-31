@@ -24,8 +24,14 @@ const showUser = (req, res) => {
   }
 };
 
-const showManagerUsers = async (req, res) => {
+const showManagerRestaurantsUsers = async (req, res) => {
   UserSchema.find({ rol: "restaurant_manager" })
+    .then(users => res.json({ users }))
+    .catch(err => res.status(500).json({ err }));
+};
+
+const showManagerMealUsers = async (req, res) => {
+  UserSchema.find({ rol: "meals_manager" })
     .then(users => res.json({ users }))
     .catch(err => res.status(500).json({ err }));
 };
@@ -90,5 +96,6 @@ module.exports = {
   deleteUser,
   createAvatar,
   searchUser,
-  showManagerUsers,
+  showManagerRestaurantsUsers,
+  showManagerMealUsers,
 };

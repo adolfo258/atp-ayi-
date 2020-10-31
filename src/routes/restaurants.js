@@ -17,11 +17,10 @@ const { validateRestaurant } = require("../validators/restaurantValidator");
 const { checkRoles } = require("../controllers/authController");
 
 //SEARCH
-router.get("/search/:params", searchRestaurant);
+router.get("/search/:params", passport.authenticate("jwt", { session: false }), searchRestaurant);
 
 //GET
 router.get("/", passport.authenticate("jwt", { session: false }), showRestaurant);
-router.get("/:id", showRestaurant);
 
 //POST
 router.post(
@@ -35,6 +34,7 @@ router.post(
 router.post(
   "/uploads/:id",
   passport.authenticate("jwt", { session: false }),
+  checkRoles(["admin", "restaurant_manager"]),
   multer.single("avatar"),
   createAvatar
 );
