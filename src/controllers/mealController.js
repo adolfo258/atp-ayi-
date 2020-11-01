@@ -34,7 +34,7 @@ const createMeal = async (req, res) => {
 
 //EDIT
 const editMeal = (req, res) => {
-  MealSchema.update({ _id: req.params.id }, req.body)
+  MealSchema.findByIdAndUpdate({ _id: req.params.id }, req.body)
     .then(msg => res.json({ message: `Meal edited correctly` }))
     .catch(err => res.status(500).send(err));
 };

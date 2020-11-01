@@ -10,6 +10,8 @@ const {
   deleteRestaurant,
   searchRestaurant,
   createAvatar,
+  pushMeal,
+  removeMealFromRestaurant,
 } = require("../controllers/restaurantController");
 
 const { validateRestaurant } = require("../validators/restaurantValidator");
@@ -45,6 +47,18 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   checkRoles(["admin", "restaurant_manager"]),
   editRestaurant
+);
+router.put(
+  "/addmeal/:id",
+  passport.authenticate("jwt", { session: false }),
+  checkRoles(["admin", "restaurant_manager"]),
+  pushMeal
+);
+router.put(
+  "/removemeal/:id",
+  passport.authenticate("jwt", { session: false }),
+  checkRoles(["admin", "restaurant_manager"]),
+  removeMealFromRestaurant
 );
 
 //DELETE

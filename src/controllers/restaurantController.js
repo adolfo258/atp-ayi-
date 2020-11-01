@@ -35,8 +35,20 @@ const createRestaurant = async (req, res) => {
 
 //EDIT
 const editRestaurant = (req, res) => {
-  RestaurantSchema.update({ _id: req.params.id }, req.body)
-    .then(msg => res.json({ message: `Restaurant edited correctly` }))
+  RestaurantSchema.findByIdAndUpdate({ _id: req.params.id }, req.body)
+    .then(msg => res.send(msg))
+    .catch(err => res.status(500).json({ err }));
+};
+
+const pushMeal = (req, res) => {
+  RestaurantSchema.findByIdAndUpdate({ _id: req.params.id }, { $push: { meals: req.body.meals } })
+    .then(restaurant => res.send(restaurant))
+    .catch(err => res.status(500).json({ err }));
+};
+
+const removeMealFromRestaurant = (req, res) => {
+  RestaurantSchema.findByIdAndUpdate({ _id: req.params.id }, { $pull: { meals: req.body.mealId } })
+    .then(rest => res.send(rest))
     .catch(err => res.status(500).json({ err }));
 };
 
@@ -75,4 +87,6 @@ module.exports = {
   deleteRestaurant,
   searchRestaurant,
   createAvatar,
+  pushMeal,
+  removeMealFromRestaurant,
 };
