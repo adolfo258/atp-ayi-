@@ -5,8 +5,8 @@ const fs = require("fs-extra");
 //SEARCH
 const searchRestaurant = (req, res) => {
   RestaurantSchema.find({ $text: { $search: req.params.params } })
-    .then(rest => res.json({ rest }))
-    .catch(err => res.json({ err }));
+    .then(rest => res.send(rest))
+    .catch(err => res.send(err));
 };
 
 //SHOW

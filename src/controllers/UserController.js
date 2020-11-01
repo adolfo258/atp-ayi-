@@ -6,7 +6,7 @@ const fs = require("fs-extra");
 //SEARCH
 const searchUser = (req, res) => {
   UserSchema.find({ $text: { $search: req.params.params } })
-    .then(users => res.json({ users }))
+    .then(users => res.send(users))
     .catch(err => res.json({ err }));
 };
 
@@ -26,13 +26,13 @@ const showUser = (req, res) => {
 
 const showManagerRestaurantsUsers = async (req, res) => {
   UserSchema.find({ rol: "restaurant_manager" })
-    .then(users => res.json({ users }))
+    .then(users => res.send(users))
     .catch(err => res.status(500).json({ err }));
 };
 
 const showManagerMealUsers = async (req, res) => {
   UserSchema.find({ rol: "meals_manager" })
-    .then(users => res.json({ users }))
+    .then(users => res.send(users))
     .catch(err => res.status(500).json({ err }));
 };
 

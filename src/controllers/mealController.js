@@ -5,7 +5,7 @@ const fs = require("fs-extra");
 //SEARCH
 const searchMeal = (req, res) => {
   MealSchema.find({ $text: { $search: req.params.params } })
-    .then(rest => res.json({ rest }))
+    .then(rest => res.send(rest))
     .catch(err => res.json({ err }));
 };
 
