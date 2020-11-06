@@ -15,12 +15,12 @@ const showUser = (req, res) => {
   if (!req.params.id) {
     UserSchema.find()
       .then(users => res.send(users))
-      .catch(err => res.status(404).send(err));
+      .catch(err => res.status(404).json(err));
   } else {
     const id = req.params.id;
     UserSchema.findById(id)
       .then(user => res.send(user))
-      .catch(err => res.status(404).send(err));
+      .catch(err => res.status(404).json(err));
   }
 };
 

@@ -23,11 +23,13 @@ router.get("/:params", passport.authenticate("jwt", { session: false }), searchU
 
 //GET
 router.get("/", passport.authenticate("jwt", { session: false }), showUser);
+
 router.get(
   "/managers/restaurants",
   passport.authenticate("jwt", { session: false }),
   showManagerRestaurantsUsers
 );
+
 router.get(
   "/managers/meals",
   passport.authenticate("jwt", { session: false }),
@@ -61,6 +63,7 @@ router.delete(
   checkRoles(["admin"]),
   deleteUser
 );
+
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
